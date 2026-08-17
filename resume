@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tanishka — Data, Code & Curiosity</title>
+  <meta
+    name="description"
+    content="Tanishka — Data Science student, developer and curious mind."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #070708;
+      --surface: #101012;
+      --surface2: #151518;
+      --text: #f1f1f2;
+      --muted: #85858c;
+      --line: rgba(255,255,255,.1);
+      --accent: #dfff68;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* BACKGROUND */
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: .025;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .12;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+
+    .glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .08;
+      pointer-events: none;
+    }
+
+    .glow.one {
+      background: var(--accent);
+      top: -250px;
+      right: -150px;
+    }
+
+    .glow.two {
+      background: #626cff;
+      bottom: 10%;
+      left: -250px;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      height: 80px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      transition: .3s;
+    }
+
+    nav.scrolled {
+      background: rgba(7,7,8,.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      font-family: "DM Mono", monospace;
+      font-size: 25px;
+      letter-spacing: -3px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: #8d8d93;
+      transition: .25s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-talk {
+      font-size: 12px;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 5px;
+    }
+
+    /* COMMON */
+
+    .container {
+      width: min(1180px, 88%);
+      margin: auto;
+    }
+
+    .section {
+      padding: 150px 0;
+    }
+
+    .eyebrow {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 22px;
+      display: block;
+    }
+
+    .section-heading {
+      font-size: clamp(42px, 6vw, 72px);
+      letter-spacing: -5px;
+      line-height: .95;
+      max-width: 800px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+      max-width: 600px;
+      margin-top: 25px;
+    }
+
+    /* HERO */
+
+    #home {
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 150px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      position: relative;
+    }
+
+    .available {
+      display: inline-flex;
+      gap: 9px;
+      align-items: center;
+      border: 1px solid var(--line);
+      padding: 9px 13px;
+      border-radius: 30px;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      color: #88888f;
+      margin-bottom: 35px;
+      background: rgba(255,255,255,.02);
+    }
+
+    .status {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(70px, 9vw, 130px);
+      line-height: .82;
+      letter-spacing: -9px;
+      margin-bottom: 38px;
+    }
+
+    .serif {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.5);
+    }
+
+    .role {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .role span {
+      color: #5e5e64;
+    }
+
+    .role strong {
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .hero-text {
+      max-width: 500px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin-top: 35px;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #080808;
+      padding: 15px 20px;
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      transition: .3s;
+    }
+
+    .primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(223,255,104,.13);
+    }
+
+    .secondary {
+      color: #99999f;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+    }
+
+    .secondary:hover {
+      color: white;
+    }
+
+    /* PLANET */
+
+    .visual {
+      display: grid;
+      place-items: center;
+      height: 550px;
+    }
+
+    .planet-system {
+      width: 420px;
+      height: 420px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .planet {
+      width: 165px;
+      height: 165px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, #f3ffc0, #a4b45a 38%, #292c21 76%);
+      box-shadow:
+        0 0 90px rgba(223,255,104,.15),
+        inset -30px -25px 45px rgba(0,0,0,.6);
+      display: grid;
+      place-items: center;
+      animation: float 5s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    .planet span {
+      font-family: "DM Mono", monospace;
+      color: rgba(0,0,0,.65);
+      font-size: 14px;
+      letter-spacing: 3px;
+    }
+
+    .orbit {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 50%;
+    }
+
+    .orbit.a {
+      width: 420px;
+      height: 220px;
+      transform: rotate(-20deg);
+      animation: rotate 18s linear infinite;
+    }
+
+    .orbit.b {
+      width: 300px;
+      height: 300px;
+      animation: rotate 24s linear infinite reverse;
+    }
+
+    .star {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+      position: absolute;
+    }
+
+    .star.a {
+      top: 15px;
+      left: 80px;
+    }
+
+    .star.b {
+      top: 65px;
+      right: 15px;
+    }
+
+    .float-card {
+      position: absolute;
+      background: rgba(16,16,18,.75);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--line);
+      padding: 11px 14px;
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+      color: #aaaab0;
+      z-index: 5;
+    }
+
+    .float-card.one {
+      top: 45px;
+      right: -10px;
+    }
+
+    .float-card.two {
+      bottom: 45px;
+      left: -10px;
+    }
+
+    /* MARQUEE */
+
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 35px;
+      width: max-content;
+      animation: marquee 25s linear infinite;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #606066;
+    }
+
+    /* ABOUT */
+
+    .about-grid {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .about-large {
+      font-size: clamp(40px, 5vw, 70px);
+      line-height: .95;
+      letter-spacing: -4px;
+    }
+
+    .about-large span {
+      color: #55555a;
+    }
+
+    .about-large strong {
+      display: block;
+      font-weight: 500;
+    }
+
+    .about-large em {
+      display: block;
+      font-family: "Playfair Display", serif;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .about-content {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .about-content p + p {
+      margin-top: 20px;
+    }
+
+    .stats {
+      margin-top: 40px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 50px;
+    }
+
+    .stats strong {
+      display: block;
+      color: white;
+      font-family: "DM Mono", monospace;
+    }
+
+    .stats span {
+      font-family: "DM Mono", monospace;
+      color: #5c5c62;
+      font-size: 9px;
+    }
+
+    /* SKILLS */
+
+    .skills {
+      margin-top: 70px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .skill {
+      min-height: 220px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      transition: .35s;
+      position: relative;
+    }
+
+    .skill:hover {
+      transform: translateY(-8px);
+      border-color: rgba(223,255,104,.35);
+    }
+
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      margin-bottom: 40px;
+    }
+
+    .skill h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .skill p {
+      color: #6e6e74;
+      font-size: 12px;
+      line-height: 1.7;
+      max-width: 250px;
+    }
+
+    .skill-number {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      color: #4e4e54;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+    }
+
+    /* PROJECTS */
+
+    .projects {
+      margin-top: 70px;
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: 90px 1fr 100px;
+      gap: 30px;
+      padding: 45px 0;
+      border-top: 1px solid var(--line);
+      transition: .3s;
+    }
+
+    .project:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project:hover {
+      padding-left: 15px;
+    }
+
+    .project-number {
+      color: #515158;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+    }
+
+    .project-type {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+    }
+
+    .project h3 {
+      font-size: clamp(32px, 4vw, 54px);
+      letter-spacing: -3px;
+      margin: 12px 0;
+    }
+
+    .project p {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 20px;
+    }
+
+    .tags span {
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      color: #77777d;
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-links a {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      font-size: 14px;
+      color: #77777d;
+    }
+
+    .project-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* EXPLORING */
+
+    .exploring {
+      padding: 130px 0;
+      background: #0c0c0e;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .explore-title {
+      font-size: clamp(44px, 5vw, 70px);
+      line-height: .95;
+      letter-spacing: -5px;
+    }
+
+    .explore-title i {
+      font-family: "Playfair Display", serif;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .explore-list div {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+      color: #8e8e94;
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      transition: .25s;
+    }
+
+    .explore-list div:hover {
+      color: white;
+      padding-left: 15px;
+    }
+
+    /* TIMELINE */
+
+    .timeline {
+      margin-top: 70px;
+      margin-left: 80px;
+      border-left: 1px solid var(--line);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 100px 20px 1fr;
+      gap: 30px;
+      padding: 30px 0;
+    }
+
+    .year {
+      color: #55555a;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-left: -34px;
+      box-shadow: 0 0 15px var(--accent);
+    }
+
+    .timeline h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .timeline p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      max-width: 550px;
+    }
+
+    /* CONTACT */
+
+    .contact {
+      padding: 180px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+    }
+
+    .contact h2 {
+      font-size: clamp(58px, 9vw, 120px);
+      letter-spacing: -8px;
+      line-height: .85;
+    }
+
+    .contact h2 i {
+      font-family: "Playfair Display", serif;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .contact p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 480px;
+      margin: 35px auto;
+      line-height: 1.8;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 55px;
+    }
+
+    .socials a {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: #77777d;
+      transition: .25s;
+    }
+
+    .socials a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 25px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      color: #56565c;
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+    }
+
+    .footer-inner span:nth-child(2) {
+      color: #68686e;
+    }
+
+    /* SCROLL REVEAL */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+
+    @media(max-width: 850px) {
+
+      .nav-links,
+      .nav-talk {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 130px;
+      }
+
+      .visual {
+        height: 420px;
+      }
+
+      .about-grid,
+      .explore-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .skills {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .timeline {
+        margin-left: 0;
+      }
+    }
+
+    @media(max-width: 600px) {
+
+      .container {
+        width: 90%;
+      }
+
+      .section {
+        padding: 100px 0;
+      }
+
+      .hero h1 {
+        font-size: 67px;
+        letter-spacing: -5px;
+      }
+
+      .planet-system {
+        transform: scale(.75);
+      }
+
+      .visual {
+        height: 330px;
+      }
+
+      .skills {
+        grid-template-columns: 1fr;
+      }
+
+      .project {
+        grid-template-columns: 40px 1fr;
+        gap: 15px;
+      }
+
+      .project-links {
+        grid-column: 2;
+      }
+
+      .timeline-item {
+        grid-template-columns: 65px 20px 1fr;
+        gap: 20px;
+      }
+
+      .dot {
+        margin-left: -24px;
+      }
+
+      .contact h2 {
+        letter-spacing: -4px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+      }
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-13px); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+<div class="grid"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<!-- NAVIGATION -->
+
+<nav id="navbar">
+
+  <a href="#home" class="logo">
+    T<span>.</span>
+  </a>
+
+  <div class="nav-links">
+    <a href="#about">ABOUT</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#journey">JOURNEY</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+
+  <a href="#contact" class="nav-talk">
+    LET'S TALK ↗
+  </a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<main id="home">
+
+<section class="hero container">
+
+  <div class="hero-content reveal">
+
+    <div class="available">
+      <span class="status"></span>
+      CURRENTLY LEARNING & BUILDING
+    </div>
+
+    <h1>
+      Data.<br>
+      <span class="serif">Code.</span><br>
+      <span class="outline">Curiosity.</span>
+    </h1>
+
+    <div class="role">
+      <span>I AM A</span>
+      <strong id="role">DATA SCIENCE STUDENT</strong>
+    </div>
+
+    <p class="hero-text">
+      I'm Tanishka — a Data Science student who enjoys
+      turning ideas into experiments, projects and things
+      that actually work.
+    </p>
+
+    <div class="buttons">
+
+      <a href="#projects" class="primary">
+        EXPLORE MY WORK ↓
+      </a>
+
+      <a href="#about" class="secondary">
+        MORE ABOUT ME ↗
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="visual reveal">
+
+    <div class="planet-system">
+
+      <div class="orbit a">
+        <span class="star a"></span>
+      </div>
+
+      <div class="orbit b">
+        <span class="star b"></span>
+      </div>
+
+      <div class="planet">
+        <span>DS</span>
+      </div>
+
+      <div class="float-card one">
+        ✦ ALWAYS CURIOUS
+      </div>
+
+      <div class="float-card two">
+        ◉ BUILDING THINGS
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MARQUEE -->
+
+<div class="marquee">
+
+  <div class="marquee-track">
+
+    <span>DATA SCIENCE</span>
+    <span>✦</span>
+    <span>MACHINE LEARNING</span>
+    <span>✦</span>
+    <span>ARTIFICIAL INTELLIGENCE</span>
+    <span>✦</span>
+    <span>RESEARCH</span>
+    <span>✦</span>
+    <span>CREATIVE TECHNOLOGY</span>
+    <span>✦</span>
+
+    <span>DATA SCIENCE</span>
+    <span>✦</span>
+    <span>MACHINE LEARNING</span>
+    <span>✦</span>
+    <span>ARTIFICIAL INTELLIGENCE</span>
+    <span>✦</span>
+    <span>RESEARCH</span>
+    <span>✦</span>
+    <span>CREATIVE TECHNOLOGY</span>
+    <span>✦</span>
+
+  </div>
+
+</div>
+
+
+<!-- ABOUT -->
+
+<section id="about" class="section container reveal">
+
+  <span class="eyebrow">01 / ABOUT</span>
+
+  <h2 class="section-heading">
+    A curious mind<br>
+    with a keyboard.
+  </h2>
+
+  <p class="section-description">
+    I like learning by building — experimenting with data,
+    creating applications and exploring ideas somewhere
+    between technology and curiosity.
+  </p>
+
+
+  <div class="about-grid">
+
+    <div class="about-large">
+
+      <span>Currently</span>
+
+      <strong>exploring</strong>
+
+      <em>what's possible.</em>
+
+    </div>
+
+
+    <div class="about-content">
+
+      <p>
+        I'm studying Data Science and building my foundation
+        across programming, statistics, machine learning and
+        analytics.
+      </p>
+
+      <p>
+        Outside coursework, I enjoy hackathons, coding projects,
+        research ideas and discovering technologies that make
+        interesting problems easier to solve.
+      </p>
+
+
+      <div class="stats">
+
+        <div>
+          <strong>∞</strong>
+          <span>IDEAS</span>
+        </div>
+
+        <div>
+          <strong>24/7</strong>
+          <span>CURIOSITY</span>
+        </div>
+
+        <div>
+          <strong>01</strong>
+          <span>JOURNEY</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SKILLS -->
+
+<section id="skills" class="section container reveal">
+
+  <span class="eyebrow">02 / SKILLS</span>
+
+  <h2 class="section-heading">
+    Tools in my universe.
+  </h2>
+
+  <p class="section-description">
+    A growing toolkit — not a final list.
+  </p>
+
+
+  <div class="skills">
+
+    <div class="skill">
+      <span class="skill-number">01</span>
+      <div class="skill-icon">⌘</div>
+      <h3>Python</h3>
+      <p>
+        Data analysis, automation, programming and
+        machine learning experiments.
+      </p>
+    </div>
+
+
+    <div class="skill">
+      <span class="skill-number">02</span>
+      <div class="skill-icon">◈</div>
+      <h3>Data Science</h3>
+      <p>
+        Turning messy datasets into meaningful
+        information and insights.
+      </p>
+    </div>
+
+
+    <div class="skill">
+      <span class="skill-number">03</span>
+      <div class="skill-icon">◎</div>
+      <h3>Machine Learning</h3>
+      <p>
+        Exploring predictive models and intelligent
+        systems.
+      </p>
+    </div>
+
+
+    <div class="skill">
+      <span class="skill-number">04</span>
+      <div class="skill-icon">▥</div>
+      <h3>Data Visualization</h3>
+      <p>
+        Making complex information easier to
+        understand.
+      </p>
+    </div>
+
+
+    <div class="skill">
+      <span class="skill-number">05</span>
+      <div class="skill-icon">⌬</div>
+      <h3>SQL</h3>
+      <p>
+        Working with relational databases,
+        queries and structured data.
+      </p>
+    </div>
+
+
+    <div class="skill">
+      <span class="skill-number">06</span>
+      <div class="skill-icon">✦</div>
+      <h3>AI</h3>
+      <p>
+        Exploring practical applications of
+        artificial intelligence.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+
+<section id="projects" class="section container reveal">
+
+  <span class="eyebrow">03 / SELECTED WORK</span>
+
+  <h2 class="section-heading">
+    Things I've been building.
+  </h2>
+
+  <p class="section-description">
+    Experiments, concepts and projects where learning
+    becomes something tangible.
+  </p>
+
+
+  <div class="projects">
+
+
+    <article class="project">
+
+      <div class="project-number">
+        01
+      </div>
+
+      <div>
+
+        <span class="project-type">
+          AI / MOBILE / DATA
+        </span>
+
+        <h3>
+          Smart Attendance
+        </h3>
+
+        <p>
+          A smart attendance system combining rotating
+          QR verification, identity verification and
+          automated Google Sheets storage.
+        </p>
+
+        <div class="tags">
+          <span>REACT NATIVE</span>
+          <span>QR</span>
+          <span>ML KIT</span>
+          <span>GOOGLE SHEETS</span>
+        </div>
+
+      </div>
+
+      <div class="project-links">
+
+        <a href="#" title="GitHub">
+          GH
+        </a>
+
+        <a href="#" title="Live">
+          ↗
+        </a>
+
+      </div>
+
+    </article>
+
+
+    <article class="project">
+
+      <div class="project-number">
+        02
+      </div>
+
+      <div>
+
+        <span class="project-type">
+          SAFETY / MOBILE
+        </span>
+
+        <h3>
+          ShaktiX
+        </h3>
+
+        <p>
+          An emergency assistance concept designed around
+          quick SOS activation, location sharing and
+          emergency communication.
+        </p>
+
+        <div class="tags">
+          <span>KOTLIN</span>
+          <span>ANDROID</span>
+          <span>FIREBASE</span>
+          <span>LOCATION</span>
+        </div>
+
+      </div>
+
+      <div class="project-links">
+
+        <a href="#" title="GitHub">
+          GH
+        </a>
+
+        <a href="#" title="Live">
+          ↗
+        </a>
+
+      </div>
+
+    </article>
+
+
+    <article class="project">
+
+      <div class="project-number">
+        03
+      </div>
+
+      <div>
+
+        <span class="project-type">
+          AI / SUSTAINABILITY
+        </span>
+
+        <h3>
+          Eco-Label Lens
+        </h3>
+
+        <p>
+          An AI-assisted concept for detecting potentially
+          misleading sustainability claims on product labels.
+        </p>
+
+        <div class="tags">
+          <span>AI</span>
+          <span>COMPUTER VISION</span>
+          <span>VERTEX AI</span>
+          <span>SDG 12</span>
+        </div>
+
+      </div>
+
+      <div class="project-links">
+
+        <a href="#" title="GitHub">
+          GH
+        </a>
+
+        <a href="#" title="Live">
+          ↗
+        </a>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- EXPLORING -->
+
+<section class="exploring reveal">
+
+  <div class="container explore-grid">
+
+    <div>
+
+      <span class="eyebrow">
+        CURRENTLY EXPLORING
+      </span>
+
+      <h2 class="explore-title">
+        Going deeper,<br>
+        <i>one rabbit hole at a time.</i>
+      </h2>
+
+    </div>
+
+
+    <div class="explore-list">
+
+      <div>✦ QUANTUM AI</div>
+      <div>✦ EXOPLANET DISCOVERY</div>
+      <div>✦ MACHINE LEARNING</div>
+      <div>✦ DATA ANALYTICS</div>
+      <div>✦ RESEARCH</div>
+      <div>✦ CREATIVE TECHNOLOGY</div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- JOURNEY -->
+
+<section id="journey" class="section container reveal">
+
+  <span class="eyebrow">04 / JOURNEY</span>
+
+  <h2 class="section-heading">
+    Still writing<br>
+    the story.
+  </h2>
+
+  <p class="section-description">
+    There is no final version — just the next thing to learn.
+  </p>
+
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2024
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+        <h3>The Beginning</h3>
+        <p>
+          Started exploring programming, technology
+          and the world of data.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2025
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+        <h3>Data Science</h3>
+        <p>
+          Started building a stronger foundation in
+          Python, statistics, SQL and data analytics.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2026
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+        <h3>Build Mode</h3>
+        <p>
+          Projects, hackathons, AI experiments and
+          learning beyond the classroom.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2027+
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+        <h3>Go Deeper</h3>
+        <p>
+          Research, advanced machine learning and
+          bigger real-world projects.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact" class="contact reveal">
+
+  <div class="container">
+
+    <span class="eyebrow">
+      05 / CONTACT
+    </span>
+
+    <h2>
+      Let's build<br>
+      <i>something interesting.</i>
+    </h2>
+
+    <p>
+      Have an idea, opportunity or just want to say hello?
+      My inbox is open.
+    </p>
+
+    <!-- CHANGE THIS EMAIL -->
+
+    <a
+      href="mailto:your-email@example.com"
+      class="primary"
+    >
+      SAY HELLO →
+    </a>
+
+
+    <div class="socials">
+
+      <!-- CHANGE THESE LINKS -->
+
+      <a href="#" title="GitHub">
+        GH
+      </a>
+
+      <a href="#" title="LinkedIn">
+        IN
+      </a>
+
+      <a
+        href="mailto:your-email@example.com"
+        title="Email"
+      >
+        @
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="container footer-inner">
+
+    <span>
+      © 2026 TANISHKA
+    </span>
+
+    <span>
+      MADE WITH CURIOSITY ✦
+    </span>
+
+    <span>
+      DATA · CODE · CURIOSITY
+    </span>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+  /* NAVBAR */
+
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 40) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+
+  });
+
+
+  /* ROLE ANIMATION */
+
+  const roles = [
+    "DATA SCIENCE STUDENT",
+    "DEVELOPER",
+    "PROBLEM SOLVER",
+    "RESEARCH ENTHUSIAST"
+  ];
+
+  let roleIndex = 0;
+
+  const roleElement =
+    document.getElementById("role");
+
+  setInterval(() => {
+
+    roleIndex =
+      (roleIndex + 1) % roles.length;
+
+    roleElement.style.opacity = "0";
+
+    setTimeout(() => {
+
+      roleElement.textContent =
+        roles[roleIndex];
+
+      roleElement.style.opacity = "1";
+
+    }, 250);
+
+  }, 2500);
+
+
+  /* SCROLL REVEAL */
+
+  const observer =
+    new IntersectionObserver(
+      entries => {
+
+        entries.forEach(entry => {
+
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+
+        });
+
+      },
+      {
+        threshold: .12
+      }
+    );
+
+
+  document
+    .querySelectorAll(".reveal")
+    .forEach(element => {
+
+      observer.observe(element);
+
+    });
+
+
+  /* CURSOR GLOW */
+
+  const cursor =
+    document.createElement("div");
+
+  cursor.style.position = "fixed";
+  cursor.style.width = "250px";
+  cursor.style.height = "250px";
+  cursor.style.borderRadius = "50%";
+  cursor.style.pointerEvents = "none";
+  cursor.style.zIndex = "0";
+  cursor.style.background =
+    "radial-gradient(circle, rgba(223,255,104,.045), transparent 70%)";
+  cursor.style.transform =
+    "translate(-50%, -50%)";
+  cursor.style.transition =
+    "left .15s ease, top .15s ease";
+
+  document.body.appendChild(cursor);
+
+
+  document.addEventListener("mousemove", e => {
+
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+
+  });
+
+
+  /* MAGNETIC BUTTON EFFECT */
+
+  document
+    .querySelectorAll(".primary")
+    .forEach(button => {
+
+      button.addEventListener("mousemove", e => {
+
+        const rect =
+          button.getBoundingClientRect();
+
+        const x =
+          e.clientX - rect.left - rect.width / 2;
+
+        const y =
+          e.clientY - rect.top - rect.height / 2;
+
+        button.style.transform =
+          `translate(${x * .08}px, ${y * .08}px)`;
+
+      });
+
+      button.addEventListener("mouseleave", () => {
+
+        button.style.transform =
+          "translate(0,0)";
+
+      });
+
+    });
+
+</script>
+
+</body>
+</html>
