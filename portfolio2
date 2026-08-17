@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tanishka — Data × Code × Cosmos</title>
+
+<meta name="description"
+content="Tanishka — Data Science student, developer, hackathon winner and space enthusiast.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#03050b;
+  --bg2:#070b16;
+  --card:rgba(13,18,31,.65);
+  --text:#f4f6ff;
+  --muted:#8d94a8;
+  --line:rgba(255,255,255,.10);
+  --cyan:#73e7ff;
+  --purple:#9a7cff;
+  --pink:#ff7bd5;
+  --green:#dfff72;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,sans-serif;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  font-family:inherit;
+}
+
+/* =========================
+   SPACE BACKGROUND
+========================= */
+
+.space{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 70% 20%,rgba(96,76,190,.15),transparent 28%),
+    radial-gradient(circle at 15% 65%,rgba(38,154,194,.09),transparent 25%),
+    #03050b;
+}
+
+.stars{
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%,white,transparent),
+    radial-gradient(1px 1px at 20% 80%,white,transparent),
+    radial-gradient(1px 1px at 35% 30%,white,transparent),
+    radial-gradient(1px 1px at 50% 60%,white,transparent),
+    radial-gradient(1px 1px at 65% 15%,white,transparent),
+    radial-gradient(1px 1px at 80% 75%,white,transparent),
+    radial-gradient(1px 1px at 90% 35%,white,transparent),
+    radial-gradient(1px 1px at 45% 90%,white,transparent),
+    radial-gradient(1px 1px at 75% 50%,white,transparent);
+  background-size:280px 280px;
+  animation:starMove 60s linear infinite;
+  opacity:.55;
+}
+
+.stars.two{
+  transform:scale(1.7);
+  opacity:.25;
+  animation-duration:100s;
+}
+
+.nebula{
+  position:absolute;
+  width:600px;
+  height:600px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.10;
+}
+
+.nebula.one{
+  background:#7657ff;
+  right:-300px;
+  top:5%;
+}
+
+.nebula.two{
+  background:#22b8d6;
+  left:-350px;
+  top:45%;
+}
+
+.grid{
+  position:absolute;
+  inset:0;
+  opacity:.06;
+  background-image:
+    linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
+  background-size:90px 90px;
+  mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+
+.shooting-star{
+  position:absolute;
+  width:140px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan));
+  transform:rotate(-35deg);
+  opacity:0;
+}
+
+.shooting-star.one{
+  top:22%;
+  left:80%;
+  animation:shoot 7s 2s infinite;
+}
+
+.shooting-star.two{
+  top:55%;
+  left:65%;
+  animation:shoot 9s 6s infinite;
+}
+
+.shooting-star.three{
+  top:35%;
+  left:25%;
+  animation:shoot 11s 4s infinite;
+}
+
+/* =========================
+   NAV
+========================= */
+
+nav{
+  height:82px;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 6%;
+  transition:.35s;
+}
+
+nav.scrolled{
+  background:rgba(3,5,11,.72);
+  backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);
+}
+
+.logo{
+  font-family:"DM Mono",monospace;
+  font-size:24px;
+  letter-spacing:-3px;
+}
+
+.logo span{
+  color:var(--cyan);
+}
+
+.nav-links{
+  display:flex;
+  gap:32px;
+}
+
+.nav-links a{
+  font-family:"DM Mono",monospace;
+  font-size:10px;
+  color:#858b9c;
+  transition:.25s;
+}
+
+.nav-links a:hover{
+  color:var(--cyan);
+}
+
+.nav-talk{
+  font-family:"DM Mono",monospace;
+  font-size:10px;
+  color:var(--cyan);
+  border-bottom:1px solid var(--cyan);
+  padding-bottom:5px;
+}
+
+/* =========================
+   COMMON
+========================= */
+
+.container{
+  width:min(1180px,88%);
+  margin:auto;
+}
+
+.section{
+  padding:150px 0;
+}
+
+.eyebrow{
+  display:block;
+  font-family:"DM Mono",monospace;
+  color:var(--cyan);
+  font-size:10px;
+  letter-spacing:2px;
+  margin-bottom:22px;
+}
+
+.heading{
+  font-size:clamp(43px,6vw,75px);
+  line-height:.95;
+  letter-spacing:-5px;
+}
+
+.description{
+  color:var(--muted);
+  line-height:1.85;
+  max-width:600px;
+  font-size:14px;
+  margin-top:25px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  min-height:100vh;
+  padding-top:140px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  align-items:center;
+  position:relative;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 13px;
+  border:1px solid rgba(115,231,255,.2);
+  border-radius:30px;
+  background:rgba(115,231,255,.04);
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+  color:#9ca5ba;
+  margin-bottom:35px;
+}
+
+.status{
+  width:7px;
+  height:7px;
+  background:#73ff9c;
+  border-radius:50%;
+  box-shadow:0 0 15px #73ff9c;
+}
+
+.hero h1{
+  font-size:clamp(68px,9vw,130px);
+  line-height:.80;
+  letter-spacing:-9px;
+  margin-bottom:40px;
+}
+
+.serif{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  font-weight:500;
+}
+
+.outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.48);
+}
+
+.role{
+  display:flex;
+  gap:10px;
+  font-family:"DM Mono",monospace;
+  font-size:11px;
+  margin-bottom:25px;
+}
+
+.role span{
+  color:#5e6577;
+}
+
+.role strong{
+  color:var(--cyan);
+  font-weight:400;
+  transition:.25s;
+}
+
+.hero-text{
+  max-width:500px;
+  color:var(--muted);
+  line-height:1.85;
+  font-size:14px;
+}
+
+.buttons{
+  display:flex;
+  gap:30px;
+  align-items:center;
+  margin-top:35px;
+}
+
+.primary{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:15px 20px;
+  background:linear-gradient(100deg,var(--cyan),#9eeaff);
+  color:#031018;
+  font-size:11px;
+  font-weight:800;
+  transition:.3s;
+}
+
+.primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 50px rgba(115,231,255,.18);
+}
+
+.secondary{
+  color:#878e9f;
+  font-family:"DM Mono",monospace;
+  font-size:10px;
+}
+
+.secondary:hover{
+  color:white;
+}
+
+/* =========================
+   ORBIT
+========================= */
+
+.hero-visual{
+  height:550px;
+  display:grid;
+  place-items:center;
+}
+
+.system{
+  width:440px;
+  height:440px;
+  position:relative;
+  display:grid;
+  place-items:center;
+}
+
+.core{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  position:relative;
+  z-index:3;
+  background:
+    radial-gradient(circle at 30% 25%,#d8fbff,#4d9eb2 35%,#0d2530 72%);
+  box-shadow:
+    0 0 70px rgba(115,231,255,.18),
+    inset -35px -30px 55px rgba(0,0,0,.65);
+  animation:float 5s ease-in-out infinite;
+  display:grid;
+  place-items:center;
+}
+
+.core span{
+  font-family:"DM Mono",monospace;
+  color:rgba(0,0,0,.6);
+  font-size:13px;
+  letter-spacing:3px;
+}
+
+.ring{
+  position:absolute;
+  border:1px solid rgba(115,231,255,.18);
+  border-radius:50%;
+}
+
+.ring.one{
+  width:440px;
+  height:210px;
+  transform:rotate(-20deg);
+  animation:rotate 18s linear infinite;
+}
+
+.ring.two{
+  width:310px;
+  height:310px;
+  animation:rotate 25s linear infinite reverse;
+}
+
+.ring.three{
+  width:240px;
+  height:420px;
+  transform:rotate(50deg);
+  animation:rotate 30s linear infinite;
+}
+
+.orbit-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 20px var(--cyan);
+  position:absolute;
+}
+
+.ring.one .orbit-dot{
+  top:13px;
+  left:70px;
+}
+
+.ring.two .orbit-dot{
+  right:25px;
+  top:60px;
+  background:var(--purple);
+  box-shadow:0 0 20px var(--purple);
+}
+
+.ring.three .orbit-dot{
+  bottom:20px;
+  left:50px;
+  background:var(--pink);
+  box-shadow:0 0 20px var(--pink);
+}
+
+.space-card{
+  position:absolute;
+  z-index:5;
+  padding:11px 14px;
+  background:rgba(8,13,24,.75);
+  backdrop-filter:blur(15px);
+  border:1px solid var(--line);
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+  color:#9ba2b4;
+}
+
+.space-card.one{
+  top:45px;
+  right:-10px;
+}
+
+.space-card.two{
+  bottom:50px;
+  left:-15px;
+}
+
+/* =========================
+   MARQUEE
+========================= */
+
+.marquee{
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+}
+
+.marquee-track{
+  display:flex;
+  gap:35px;
+  width:max-content;
+  font-family:"DM Mono",monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:#596071;
+  animation:marquee 30s linear infinite;
+}
+
+/* =========================
+   ACHIEVEMENT
+========================= */
+
+.achievement{
+  padding:100px 0;
+}
+
+.achievement-card{
+  position:relative;
+  overflow:hidden;
+  padding:55px;
+  border:1px solid rgba(223,255,114,.22);
+  background:
+    radial-gradient(circle at 85% 20%,rgba(154,124,255,.13),transparent 30%),
+    linear-gradient(120deg,rgba(223,255,114,.04),rgba(115,231,255,.03));
+}
+
+.achievement-card:before{
+  content:"";
+  position:absolute;
+  width:350px;
+  height:350px;
+  border:1px solid rgba(115,231,255,.08);
+  border-radius:50%;
+  right:-100px;
+  top:-170px;
+}
+
+.trophy{
+  font-size:38px;
+  margin-bottom:25px;
+}
+
+.achievement-label{
+  font-family:"DM Mono",monospace;
+  color:var(--green);
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.achievement h2{
+  font-size:clamp(38px,5vw,65px);
+  letter-spacing:-4px;
+  margin:15px 0;
+}
+
+.achievement p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+  max-width:650px;
+}
+
+.achievement-tech{
+  margin-top:25px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.achievement-tech span{
+  border:1px solid var(--line);
+  padding:7px 9px;
+  color:#777f91;
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
+  margin-top:80px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:100px;
+  align-items:center;
+}
+
+.about-large{
+  font-size:clamp(40px,5vw,70px);
+  line-height:.95;
+  letter-spacing:-4px;
+}
+
+.about-large span{
+  color:#515969;
+}
+
+.about-large strong{
+  display:block;
+}
+
+.about-large em{
+  display:block;
+  font-family:"Playfair Display",serif;
+  color:var(--cyan);
+  font-weight:500;
+}
+
+.about-content{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.9;
+}
+
+.about-content p+p{
+  margin-top:20px;
+}
+
+.stats{
+  margin-top:40px;
+  border-top:1px solid var(--line);
+  padding-top:25px;
+  display:flex;
+  gap:50px;
+}
+
+.stats strong{
+  display:block;
+  color:white;
+  font-family:"DM Mono",monospace;
+}
+
+.stats span{
+  color:#596071;
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+}
+
+/* =========================
+   SKILLS
+========================= */
+
+.skills{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.skill{
+  min-height:220px;
+  padding:30px;
+  position:relative;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  transition:.35s;
+}
+
+.skill:hover{
+  transform:translateY(-8px);
+  border-color:rgba(115,231,255,.35);
+  background:rgba(115,231,255,.025);
+}
+
+.skill-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  color:var(--cyan);
+  margin-bottom:40px;
+}
+
+.skill h3{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+.skill p{
+  color:#6d7484;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.skill-number{
+  position:absolute;
+  top:28px;
+  right:28px;
+  color:#4d5566;
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+}
+
+/* =========================
+   PROJECTS
+========================= */
+
+.projects{
+  margin-top:70px;
+}
+
+.project{
+  display:grid;
+  grid-template-columns:80px 1fr 100px;
+  gap:30px;
+  padding:45px 0;
+  border-top:1px solid var(--line);
+  transition:.35s;
+}
+
+.project:last-child{
+  border-bottom:1px solid var(--line);
+}
+
+.project:hover{
+  padding-left:15px;
+}
+
+.project-number{
+  font-family:"DM Mono",monospace;
+  color:#4f5767;
+  font-size:11px;
+}
+
+.project-type{
+  font-family:"DM Mono",monospace;
+  color:var(--cyan);
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+
+.project h3{
+  font-size:clamp(32px,4vw,55px);
+  letter-spacing:-3px;
+  margin:12px 0;
+}
+
+.project p{
+  max-width:620px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:20px;
+}
+
+.tags span{
+  padding:7px 9px;
+  border:1px solid var(--line);
+  color:#707888;
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+}
+
+.project-links{
+  display:flex;
+  gap:8px;
+}
+
+.project-links a{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  color:#777f90;
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+}
+
+.project-links a:hover{
+  color:var(--cyan);
+  border-color:var(--cyan);
+}
+
+/* =========================
+   SPACE INTEREST
+========================= */
+
+.cosmos{
+  padding:140px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(circle at 20% 50%,rgba(65,202,237,.06),transparent 30%),
+    radial-gradient(circle at 80% 50%,rgba(140,101,255,.08),transparent 30%);
+}
+
+.cosmos-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:100px;
+  align-items:center;
+}
+
+.cosmos-title{
+  font-size:clamp(45px,6vw,75px);
+  line-height:.9;
+  letter-spacing:-5px;
+}
+
+.cosmos-title i{
+  font-family:"Playfair Display",serif;
+  color:var(--cyan);
+  font-weight:500;
+}
+
+.cosmos-list div{
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+  color:#7e8698;
+  font-family:"DM Mono",monospace;
+  font-size:11px;
+  transition:.25s;
+}
+
+.cosmos-list div:hover{
+  color:white;
+  padding-left:15px;
+}
+
+/* =========================
+   JOURNEY
+========================= */
+
+.timeline{
+  margin-top:70px;
+  margin-left:80px;
+  border-left:1px solid var(--line);
+}
+
+.timeline-item{
+  display:grid;
+  grid-template-columns:90px 20px 1fr;
+  gap:30px;
+  padding:30px 0;
+}
+
+.year{
+  color:#535b6b;
+  font-family:"DM Mono",monospace;
+  font-size:11px;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 16px var(--cyan);
+  margin-left:-34px;
+}
+
+.timeline h3{
+  font-size:20px;
+  margin-bottom:8px;
+}
+
+.timeline p{
+  max-width:550px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact{
+  padding:180px 0;
+  text-align:center;
+  position:relative;
+  border-top:1px solid var(--line);
+}
+
+.contact h2{
+  font-size:clamp(58px,9vw,120px);
+  line-height:.85;
+  letter-spacing:-8px;
+}
+
+.contact h2 i{
+  font-family:"Playfair Display",serif;
+  color:var(--cyan);
+  font-weight:500;
+}
+
+.contact p{
+  max-width:480px;
+  margin:35px auto;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:14px;
+}
+
+.socials{
+  margin-top:55px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.socials a{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  font-family:"DM Mono",monospace;
+  font-size:10px;
+  color:#747c8d;
+  transition:.25s;
+}
+
+.socials a:hover{
+  color:var(--cyan);
+  border-color:var(--cyan);
+  transform:translateY(-4px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  border-top:1px solid var(--line);
+  padding:25px 0;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  color:#525a6a;
+  font-family:"DM Mono",monospace;
+  font-size:9px;
+}
+
+/* =========================
+   REVEAL
+========================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(35px);
+  transition:opacity .9s ease,transform .9s ease;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-13px)}
+}
+
+@keyframes rotate{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@keyframes starMove{
+  from{transform:translateY(0)}
+  to{transform:translateY(-280px)}
+}
+
+@keyframes marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+@keyframes shoot{
+  0%{
+    opacity:0;
+    transform:translate(0,0) rotate(-35deg);
+  }
+  10%{
+    opacity:1;
+  }
+  30%{
+    opacity:0;
+    transform:translate(-400px,250px) rotate(-35deg);
+  }
+  100%{
+    opacity:0;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+  .nav-links,
+  .nav-talk{
+    display:none;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:130px;
+  }
+
+  .hero-visual{
+    height:400px;
+  }
+
+  .about-grid,
+  .cosmos-grid{
+    grid-template-columns:1fr;
+    gap:60px;
+  }
+
+  .skills{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .timeline{
+    margin-left:0;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .container{
+    width:90%;
+  }
+
+  .section{
+    padding:100px 0;
+  }
+
+  .hero h1{
+    font-size:67px;
+    letter-spacing:-5px;
+  }
+
+  .system{
+    transform:scale(.72);
+  }
+
+  .hero-visual{
+    height:330px;
+  }
+
+  .skills{
+    grid-template-columns:1fr;
+  }
+
+  .achievement-card{
+    padding:35px;
+  }
+
+  .project{
+    grid-template-columns:40px 1fr;
+    gap:15px;
+  }
+
+  .project-links{
+    grid-column:2;
+  }
+
+  .timeline-item{
+    grid-template-columns:60px 20px 1fr;
+    gap:20px;
+  }
+
+  .dot{
+    margin-left:-24px;
+  }
+
+  .contact h2{
+    letter-spacing:-4px;
+  }
+
+  .footer{
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SPACE BACKGROUND
+========================= -->
+
+<div class="space">
+
+  <div class="stars"></div>
+  <div class="stars two"></div>
+
+  <div class="grid"></div>
+
+  <div class="nebula one"></div>
+  <div class="nebula two"></div>
+
+  <div class="shooting-star one"></div>
+  <div class="shooting-star two"></div>
+  <div class="shooting-star three"></div>
+
+</div>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav id="navbar">
+
+  <a href="#home" class="logo">
+    T<span>.</span>
+  </a>
+
+  <div class="nav-links">
+
+    <a href="#about">ABOUT</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#cosmos">COSMOS</a>
+    <a href="#contact">CONTACT</a>
+
+  </div>
+
+  <a href="#contact" class="nav-talk">
+    LET'S TALK ↗
+  </a>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<main id="home">
+
+<section class="hero container">
+
+  <div class="reveal">
+
+    <div class="badge">
+
+      <span class="status"></span>
+
+      CURRENTLY LEARNING & BUILDING
+
+    </div>
+
+
+    <h1>
+
+      Data.<br>
+
+      <span class="serif">Code.</span><br>
+
+      <span class="outline">Cosmos.</span>
+
+    </h1>
+
+
+    <div class="role">
+
+      <span>I AM A</span>
+
+      <strong id="role">
+        DATA SCIENCE STUDENT
+      </strong>
+
+    </div>
+
+
+    <p class="hero-text">
+
+      I'm Tanishka — a Data Science student,
+      developer and space enthusiast fascinated
+      by the intersection of technology, data
+      and the universe.
+
+    </p>
+
+
+    <div class="buttons">
+
+      <a href="#projects" class="primary">
+        EXPLORE MY WORK ↓
+      </a>
+
+      <a href="#about" class="secondary">
+        DISCOVER MY STORY ↗
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- ORBITAL VISUAL -->
+
+  <div class="hero-visual reveal">
+
+    <div class="system">
+
+      <div class="ring one">
+
+        <span class="orbit-dot"></span>
+
+      </div>
+
+
+      <div class="ring two">
+
+        <span class="orbit-dot"></span>
+
+      </div>
+
+
+      <div class="ring three">
+
+        <span class="orbit-dot"></span>
+
+      </div>
+
+
+      <div class="core">
+
+        <span>
+          DS × AI
+        </span>
+
+      </div>
+
+
+      <div class="space-card one">
+        ✦ LOOKING BEYOND
+      </div>
+
+
+      <div class="space-card two">
+        ◉ BUILDING HERE
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     MARQUEE
+========================= -->
+
+<div class="marquee">
+
+  <div class="marquee-track">
+
+    <span>DATA SCIENCE</span>
+    <span>✦</span>
+
+    <span>ARTIFICIAL INTELLIGENCE</span>
+    <span>✦</span>
+
+    <span>SPACE</span>
+    <span>✦</span>
+
+    <span>EXOPLANETS</span>
+    <span>✦</span>
+
+    <span>MACHINE LEARNING</span>
+    <span>✦</span>
+
+    <span>RESEARCH</span>
+    <span>✦</span>
+
+    <span>DATA SCIENCE</span>
+    <span>✦</span>
+
+    <span>ARTIFICIAL INTELLIGENCE</span>
+    <span>✦</span>
+
+    <span>SPACE</span>
+    <span>✦</span>
+
+    <span>EXOPLANETS</span>
+    <span>✦</span>
+
+    <span>MACHINE LEARNING</span>
+    <span>✦</span>
+
+    <span>RESEARCH</span>
+    <span>✦</span>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     ACHIEVEMENT
+========================= -->
+
+<section class="achievement container reveal">
+
+  <div class="achievement-card">
+
+    <div class="trophy">
+      🏆
+    </div>
+
+    <span class="achievement-label">
+      GDGoC HACKATHON — WINNER
+    </span>
+
+    <h2>
+      Smart Attendance
+      Marking System
+    </h2>
+
+    <p>
+
+      Built a smart attendance solution combining
+      QR-based verification, identity verification
+      and automated attendance management.
+
+      <br><br>
+
+      A project that started as an idea and ended
+      with a hackathon win.
+
+    </p>
+
+
+    <div class="achievement-tech">
+
+      <span>QR VERIFICATION</span>
+      <span>FACE DETECTION</span>
+      <span>REACT NATIVE</span>
+      <span>GOOGLE SHEETS</span>
+      <span>ML KIT</span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section id="about" class="section container reveal">
+
+  <span class="eyebrow">
+    01 / ABOUT
+  </span>
+
+
+  <h2 class="heading">
+
+    A curious mind<br>
+    looking beyond Earth.
+
+  </h2>
+
+
+  <p class="description">
+
+    I like learning by building — experimenting
+    with data, creating applications and exploring
+    questions that sit somewhere between technology,
+    science and the universe.
+
+  </p>
+
+
+  <div class="about-grid">
+
+    <div class="about-large">
+
+      <span>Currently</span>
+
+      <strong>exploring</strong>
+
+      <em>what's beyond.</em>
+
+    </div>
+
+
+    <div class="about-content">
+
+      <p>
+
+        I'm studying Data Science and developing
+        my foundation across programming, statistics,
+        machine learning and analytics.
+
+      </p>
+
+
+      <p>
+
+        But my curiosity doesn't stop at datasets.
+        I'm fascinated by space, exoplanets,
+        astronomy and the possibility of using
+        AI to explore questions far beyond our planet.
+
+      </p>
+
+
+      <div class="stats">
+
+        <div>
+          <strong>01</strong>
+          <span>HACKATHON WIN</span>
+        </div>
+
+        <div>
+          <strong>∞</strong>
+          <span>QUESTIONS</span>
+        </div>
+
+        <div>
+          <strong>∞</strong>
+          <span>STARS</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     SKILLS
+========================= -->
+
+<section id="skills" class="section container reveal">
+
+  <span class="eyebrow">
+    02 / SKILLS
+  </span>
+
+
+  <h2 class="heading">
+    Tools in my universe.
+  </h2>
+
+
+  <p class="description">
+    A growing toolkit — because learning never really ends.
+  </p>
+
+
+  <div class="skills">
+
+
+    <div class="skill">
+
+      <span class="skill-number">01</span>
+
+      <div class="skill-icon">
+        PY
+      </div>
+
+      <h3>Python</h3>
+
+      <p>
+        Programming, data analysis, automation
+        and machine learning.
+      </p>
+
+    </div>
+
+
+    <div class="skill">
+
+      <span class="skill-number">02</span>
+
+      <div class="skill-icon">
+        DS
+      </div>
+
+      <h3>Data Science</h3>
+
+      <p>
+        Exploring patterns, insights and
+        meaningful information in data.
+      </p>
+
+    </div>
+
+
+    <div class="skill">
+
+      <span class="skill-number">03</span>
+
+      <div class="skill-icon">
+        AI
+      </div>
+
+      <h3>Machine Learning</h3>
+
+      <p>
+        Building and experimenting with
+        intelligent systems.
+      </p>
+
+    </div>
+
+
+    <div class="skill">
+
+      <span class="skill-number">04</span>
+
+      <div class="skill-icon">
+        SQL
+      </div>
+
+      <h3>SQL</h3>
+
+      <p>
+        Working with structured data,
+        relational databases and queries.
+      </p>
+
+    </div>
+
+
+    <div class="skill">
+
+      <span class="skill-number">05</span>
+
+      <div class="skill-icon">
+        DV
+      </div>
+
+      <h3>Data Visualization</h3>
+
+      <p>
+        Turning numbers and patterns into
+        understandable stories.
+      </p>
+
+    </div>
+
+
+    <div class="skill">
+
+      <span class="skill-number">06</span>
+
+      <div class="skill-icon">
+        ∞
+      </div>
+
+      <h3>Research</h3>
+
+      <p>
+        Curious about AI, quantum computing,
+        astronomy and emerging technologies.
+      </p>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PROJECTS
+========================= -->
+
+<section id="projects" class="section container reveal">
+
+  <span class="eyebrow">
+    03 / SELECTED WORK
+  </span>
+
+
+  <h2 class="heading">
+    Things I've built.
+  </h2>
+
+
+  <p class="description">
+
+    Projects where curiosity turned into
+    something tangible.
+
+  </p>
+
+
+  <div class="projects">
+
+
+    <!-- PROJECT 1 -->
+
+    <article class="project">
+
+      <div class="project-number">
+        01
+      </div>
+
+
+      <div>
+
+        <span class="project-type">
+          🏆 GDGoC HACKATHON — WINNER
+        </span>
+
+        <h3>
+          Smart Attendance
+        </h3>
+
+        <p>
+
+          A smart attendance marking system designed
+          around QR verification, face detection and
+          automated attendance management.
+
+        </p>
+
+
+        <div class="tags">
+
+          <span>REACT NATIVE</span>
+          <span>QR</span>
+          <span>ML KIT</span>
+          <span>GOOGLE SHEETS</span>
+
+        </div>
+
+      </div>
+
+
+      <div class="project-links">
+
+        <!-- REPLACE # WITH YOUR GITHUB -->
+
+        <a href="#" target="_blank">
+          GH
+        </a>
+
+        <!-- REPLACE # WITH LIVE PROJECT -->
+
+        <a href="#" target="_blank">
+          ↗
+        </a>
+
+      </div>
+
+    </article>
+
+
+    <!-- PROJECT 2 -->
+
+    <article class="project">
+
+      <div class="project-number">
+        02
+      </div>
+
+
+      <div>
+
+        <span class="project-type">
+          SAFETY / MOBILE
+        </span>
+
+        <h3>
+          ShaktiX
+        </h3>
+
+        <p>
+
+          An emergency assistance concept focused
+          on quick SOS activation, location sharing
+          and emergency communication.
+
+        </p>
+
+
+        <div class="tags">
+
+          <span>KOTLIN</span>
+          <span>ANDROID</span>
+          <span>FIREBASE</span>
+          <span>LOCATION</span>
+
+        </div>
+
+      </div>
+
+
+      <div class="project-links">
+
+        <a href="#" target="_blank">
+          GH
+        </a>
+
+        <a href="#" target="_blank">
+          ↗
+        </a>
+
+      </div>
+
+    </article>
+
+
+    <!-- PROJECT 3 -->
+
+    <article class="project">
+
+      <div class="project-number">
+        03
+      </div>
+
+
+      <div>
+
+        <span class="project-type">
+          AI / SUSTAINABILITY
+        </span>
+
+        <h3>
+          Eco-Label Lens
+        </h3>
+
+        <p>
+
+          An AI-assisted concept for detecting
+          potentially misleading sustainability
+          claims on product labels.
+
+        </p>
+
+
+        <div class="tags">
+
+          <span>AI</span>
+          <span>COMPUTER VISION</span>
+          <span>VERTEX AI</span>
+          <span>SDG 12</span>
+
+        </div>
+
+      </div>
+
+
+      <div class="project-links">
+
+        <a href="#" target="_blank">
+          GH
+        </a>
+
+        <a href="#" target="_blank">
+          ↗
+        </a>
+
+      </div>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     COSMOS
+========================= -->
+
+<section id="cosmos" class="cosmos reveal">
+
+  <div class="container cosmos-grid">
+
+
+    <div>
+
+      <span class="eyebrow">
+        BEYOND THE CODE
+      </span>
+
+
+      <h2 class="cosmos-title">
+
+        The universe<br>
+        is my <i>rabbit hole.</i>
+
+      </h2>
+
+      <p class="description">
+
+        I'm deeply interested in space and the
+        questions that still don't have answers.
+        One day, I'd love to explore the intersection
+        of AI, data science and astronomy.
+
+      </p>
+
+    </div>
+
+
+    <div class="cosmos-list">
+
+      <div>
+        ✦ EXOPLANET DISCOVERY
+      </div>
+
+      <div>
+        ✦ ASTROPHYSICS
+      </div>
+
+      <div>
+        ✦ SPACE TECHNOLOGY
+      </div>
+
+      <div>
+        ✦ QUANTUM AI
+      </div>
+
+      <div>
+        ✦ MACHINE LEARNING FOR ASTRONOMY
+      </div>
+
+      <div>
+        ✦ NASA & SPACE MISSIONS
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     JOURNEY
+========================= -->
+
+<section id="journey" class="section container reveal">
+
+  <span class="eyebrow">
+    04 / JOURNEY
+  </span>
+
+
+  <h2 class="heading">
+    Still writing<br>
+    the story.
+  </h2>
+
+
+  <p class="description">
+
+    No final version. Just the next thing
+    to learn, build and discover.
+
+  </p>
+
+
+  <div class="timeline">
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2024
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+
+        <h3>
+          The Beginning
+        </h3>
+
+        <p>
+          Started exploring programming,
+          technology and the world of data.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2025
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+
+        <h3>
+          Data Science
+        </h3>
+
+        <p>
+          Started building a stronger foundation
+          in Python, statistics, SQL and analytics.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        2026
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+
+        <h3>
+          Hackathon Winner
+        </h3>
+
+        <p>
+          Built Smart Attendance and won a
+          GDGoC hackathon while exploring
+          AI and mobile development.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <div class="year">
+        NEXT
+      </div>
+
+      <div class="dot"></div>
+
+      <div>
+
+        <h3>
+          Beyond Earth
+        </h3>
+
+        <p>
+          Exploring AI, advanced data science,
+          research and the possibility of using
+          technology to understand our universe.
+        </p>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact" class="contact reveal">
+
+  <div class="container">
+
+    <span class="eyebrow">
+      05 / CONTACT
+    </span>
+
+
+    <h2>
+
+      Let's build<br>
+
+      <i>something cosmic.</i>
+
+    </h2>
+
+
+    <p>
+
+      Have an idea, opportunity, project or
+      simply want to talk about technology
+      and space?
+
+      <br>
+
+      My inbox is open.
+
+    </p>
+
+
+    <!-- CHANGE EMAIL HERE -->
+
+    <a
+      href="mailto:your-email@example.com"
+      class="primary"
+    >
+      SAY HELLO →
+    </a>
+
+
+    <div class="socials">
+
+      <!-- CHANGE THESE LINKS -->
+
+      <a href="#" target="_blank">
+        GH
+      </a>
+
+      <a href="#" target="_blank">
+        IN
+      </a>
+
+      <a href="mailto:your-email@example.com">
+        @
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  <div class="container footer">
+
+    <span>
+      © 2026 TANISHKA
+    </span>
+
+    <span>
+      DATA × CODE × COSMOS
+    </span>
+
+    <span>
+      KEEP LOOKING UP ✦
+    </span>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   NAVBAR
+========================= */
+
+const navbar =
+document.getElementById("navbar");
+
+window.addEventListener("scroll",()=>{
+
+  if(window.scrollY>40){
+    navbar.classList.add("scrolled");
+  }else{
+    navbar.classList.remove("scrolled");
+  }
+
+});
+
+
+/* =========================
+   ROLE TEXT
+========================= */
+
+const roles=[
+
+  "DATA SCIENCE STUDENT",
+  "DEVELOPER",
+  "HACKATHON WINNER",
+  "SPACE ENTHUSIAST",
+  "RESEARCH EXPLORER"
+
+];
+
+let roleIndex=0;
+
+const role=
+document.getElementById("role");
+
+setInterval(()=>{
+
+  role.style.opacity="0";
+
+  setTimeout(()=>{
+
+    roleIndex=
+    (roleIndex+1)%roles.length;
+
+    role.textContent=
+    roles[roleIndex];
+
+    role.style.opacity="1";
+
+  },250);
+
+},2400);
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const observer=
+new IntersectionObserver(
+
+  entries=>{
+
+    entries.forEach(entry=>{
+
+      if(entry.isIntersecting){
+
+        entry.target.classList.add("show");
+
+      }
+
+    });
+
+  },
+
+  {
+    threshold:.12
+  }
+
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(element=>{
+
+  observer.observe(element);
+
+});
+
+
+/* =========================
+   PARALLAX SPACE
+========================= */
+
+window.addEventListener("scroll",()=>{
+
+  const scroll=
+  window.scrollY;
+
+  document
+  .querySelector(".stars")
+  .style.transform=
+  `translateY(${scroll*.04}px)`;
+
+});
+
+
+/* =========================
+   CURSOR SPACE GLOW
+========================= */
+
+const cursorGlow=
+document.createElement("div");
+
+cursorGlow.style.position="fixed";
+cursorGlow.style.width="260px";
+cursorGlow.style.height="260px";
+cursorGlow.style.borderRadius="50%";
+cursorGlow.style.pointerEvents="none";
+cursorGlow.style.zIndex="0";
+cursorGlow.style.background=
+"radial-gradient(circle,rgba(115,231,255,.045),transparent 70%)";
+cursorGlow.style.transform=
+"translate(-50%,-50%)";
+cursorGlow.style.transition=
+"left .12s ease,top .12s ease";
+
+document.body.appendChild(cursorGlow);
+
+document.addEventListener("mousemove",(event)=>{
+
+  cursorGlow.style.left=
+  event.clientX+"px";
+
+  cursorGlow.style.top=
+  event.clientY+"px";
+
+});
+
+
+/* =========================
+   BUTTON MAGNETIC EFFECT
+========================= */
+
+document
+.querySelectorAll(".primary")
+.forEach(button=>{
+
+  button.addEventListener("mousemove",(event)=>{
+
+    const rect=
+    button.getBoundingClientRect();
+
+    const x=
+    event.clientX-
+    rect.left-
+    rect.width/2;
+
+    const y=
+    event.clientY-
+    rect.top-
+    rect.height/2;
+
+    button.style.transform=
+    `translate(${x*.07}px,${y*.07}px)`;
+
+  });
+
+  button.addEventListener("mouseleave",()=>{
+
+    button.style.transform=
+    "translate(0,0)";
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
